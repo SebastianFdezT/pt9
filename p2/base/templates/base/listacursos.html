@@ -1,0 +1,31 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<div class="wrapper">
+    <h1>Cursos</h1>
+    <h4>{{cursos_count}} cursos en el grado</h4>
+    <br>
+    <div>
+        {% for curso in cursos %}
+            <div>
+                <h3><a href="/curso/{{curso.id}}">{{curso.nombre_curso}}</a></h3>
+                <a href="{% url 'actualizar-curso' curso.id %}">Actualizar curso</a>   
+                <a href="{% url 'eliminar-curso' curso.id %}">Eliminar curso</a>           
+            </div>
+        {% empty %}
+            No existe aún ningún curso añadido.
+        {% endfor %}
+    </div>
+</div>
+<br>
+{% if request.user.is_authenticated %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="nombre_curso" placeholder="Agrega un curso aquí"/>
+        <input type="submit" value="Añadir"/>
+    </form>
+</div>
+{% endif %}
+{% endblock content %}

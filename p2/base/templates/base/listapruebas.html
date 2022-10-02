@@ -1,0 +1,31 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<div class="wrapper"></div>
+    <h1>Pruebas</h1>
+    <h4>{{pruebas_count}} pruebas añadidas</h4>
+    <br>
+    <div>
+        {% for prueba in pruebas.all %}
+            <div>
+                <h3><a href="/prueba/{{prueba.id}}">{{prueba.nombre_prueba}}</a></h3>
+                <a href="{% url 'actualizar-prueba' prueba.id %}">Actualizar prueba</a> 
+                <a href="{% url 'eliminar-prueba' prueba.id %}">Eliminar prueba</a>     
+            </div>
+        {% empty %}
+            No existe aún ninguna prueba añadida.
+        {% endfor %}
+    </div>
+</div>
+<br>
+{% if request.user.is_authenticated %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="nombre_prueba" placeholder="Agrega una prueba aquí"/>
+        <input type="submit" value="Añadir"/>
+    </form>
+</div>
+{% endif %}
+{% endblock content %}

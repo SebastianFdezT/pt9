@@ -1,0 +1,31 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<div class="wrapper">
+    <h1>Temas</h1>
+    <h4>{{temas_count}} cantidad de unidades</h4>
+    <br>
+    <div>
+        {% for tema in temas %}
+            <div>
+                <h3>{{tema.nombre_tema}}</h3>
+                <a href="{% url 'actualizar-tema' tema.id %}">Actualizar tema</a>   
+                <a href="{% url 'eliminar-tema' tema.id %}">Eliminar tema</a>           
+            </div>
+        {% empty %}
+            No existe aún ningún tema añadido.
+        {% endfor %}
+    </div>
+</div>
+<br>
+{% if request.user.is_authenticated %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="nombre_tema" placeholder="Agrega una unidad aquí"/>
+        <input type="submit" value="Añadir"/>
+    </form>
+</div>
+{% endif %}
+{% endblock content %}
